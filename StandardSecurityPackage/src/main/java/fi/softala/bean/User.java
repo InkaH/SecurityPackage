@@ -11,8 +11,8 @@ public class User {
 	@NotEmpty (message = "Anna email-osoite.") @Email (message = "Anna email-osoite oikeassa muodossa.")
     private String username;
 	
-	//salasanaan on tässä hyödytöntä laittaa tyhjän tai minimi/maksimi-tarkastusta, koska salasanojen vertailuskripti estää tyhjän salasanan lähetyksen 
-	//ja salasanan hashaaja muuttaa salasanan 60-merkkiseksi hashiksi ennen validointitapahtumaa. Salasanan pituuden voi tarkastaa frontendissä.
+	//salasanaan on tässä hyödytöntä laittaa tyhjän tai minimi/maksimi-tarkastusta, koska salasanojen jQuery-vertailuskripti estää tyhjän salasanan lähetyksen 
+	//ja salasanan hashaaja muuttaa salasanan jokatapauksessa 60-merkkiseksi hashiksi ennen validointitapahtumaa. Salasanan pituus tarkastetaan frontendissä jQuerylla.
     private String password;
 	
 	private String role;

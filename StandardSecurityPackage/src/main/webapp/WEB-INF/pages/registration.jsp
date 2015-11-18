@@ -28,13 +28,13 @@
     <tr>
         <td><label>Salasana:</label>
         </td>
-        <td><form:input path="password" id="password" value="" type="password"/></td>
+        <td><form:input path="password" id="password" value="" type="password"/><span id='pwMsg'></span></td>
         <form:errors path="password"/>
     </tr>
     <tr>
         <td><label>Toista salasana:</label>
         </td>
-        <td><input id="confirm_password" value="" type="password"/><span id='message'></span></td>
+        <td><input id="confirm_password" value="" type="password"/><span id='cpwMsg'></span></td>
     </tr>
     
     </table>
@@ -43,12 +43,22 @@
     
     <script>
     
+    $('#password').on('keyup', function() {
+    	if ($(this).val().length < 3 || $(this).val().length > 60){
+    		$('#pwMsg').html('Salasanan pituus 3-60 merkkiä').css('color', 'red');
+    		document.getElementById('submit').disabled = true;
+    	} else {
+    		$('#pwMsg').html('Salasanan pituus 3-60 merkkiä').css('color', 'green');
+    		document.getElementById('submit').disabled = false;
+    	}
+    });
+    
 	$('#confirm_password').on('keyup', function () {
     	if ($(this).val() == $('#password').val()) {
-        	$('#message').html('Salasanat täsmäävät!').css('color', 'green');
+        	$('#cpwMsg').html('Salasanat täsmäävät!').css('color', 'green');
         	document.getElementById('submit').disabled = false;
     	} else {
-    		$('#message').html('Salasanat eivät täsmää!').css('color', 'red');
+    		$('#cpwMsg').html('Salasanat eivät täsmää!').css('color', 'red');
     		document.getElementById('submit').disabled = true;
     	}
 	});    
