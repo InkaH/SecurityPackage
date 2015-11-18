@@ -2,23 +2,19 @@ package fi.softala.bean;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.validation.constraints.Size;
-
 public class User {
 	
-	@NotEmpty 
+	@NotEmpty (message = "Anna email-osoite.") @Email (message = "Anna email-osoite oikeassa muodossa.")
     private String username;
 	
-	@NotEmpty @Size(min=3, max=60)
+	//salasanaan on tässä hyödytöntä laittaa tyhjän tai minimi/maksimi-tarkastusta, koska salasanojen vertailuskripti estää tyhjän salasanan lähetyksen 
+	//ja salasanan hashaaja muuttaa salasanan 60-merkkiseksi hashiksi ennen validointitapahtumaa. Salasanan pituuden voi tarkastaa frontendissä.
     private String password;
 	
-	@NotEmpty @Size(min=3, max=60)
-    private String confirmPassword;
-	
-	@NotEmpty
 	private String role;
 
 	public User() {

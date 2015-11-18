@@ -23,11 +23,13 @@
         <td><label>Email:</label>
         </td>
         <td><form:input path="username" value="" /></td>
+        <form:errors path="username"/>
     </tr>
     <tr>
         <td><label>Salasana:</label>
         </td>
         <td><form:input path="password" id="password" value="" type="password"/></td>
+        <form:errors path="password"/>
     </tr>
     <tr>
         <td><label>Toista salasana:</label>
@@ -40,6 +42,7 @@
     </form:form>
     
     <script>
+    
 	$('#confirm_password').on('keyup', function () {
     	if ($(this).val() == $('#password').val()) {
         	$('#message').html('Salasanat täsmäävät!').css('color', 'green');

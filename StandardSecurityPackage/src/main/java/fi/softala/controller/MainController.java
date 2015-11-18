@@ -1,16 +1,20 @@
 package fi.softala.controller;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
+
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import fi.softala.bean.User;
 import fi.softala.dao.UserDao;
 
@@ -72,7 +76,11 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String saveUser(Model model, @ModelAttribute(value="user") User user){
+	public String saveUser(Model model, @Valid User user, BindingResult bindingResult){
+		 if (bindingResult.hasErrors()) {
+			 user.setEmptyPassword("");
+	         return "registration";
+	        }
 		//tarkistetaan ettei kyseiselle käyttäjänimelle ole jo luotu tiliä
 		boolean duplicateUsername = getDao().searchUser(user.getUsername());
 		if(!duplicateUsername){
