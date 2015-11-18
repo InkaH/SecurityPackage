@@ -9,12 +9,12 @@
       <p>Tietokantayhteydellä: jukka 123457 (ROLE_USER) TAI inka 123456 (ROLE_USER ja ROLE_ADMIN) </p>
    <body onload='document.loginForm.username.focus();'>
       <div>
-         <h3>${message}</h3>
+         <h3>Anna sähköpostiosoite ja salasana:</h3>
          <c:if test="${not empty error}">
-            <div class="error">${error}</div>
+            <p style="color:red">${error}</p>
          </c:if>
          <c:if test="${not empty msg}">
-            <div class="msg">${msg}</div>
+            <p style="color:red">${msg}</p>
          </c:if>
          <form name='loginForm'
             action="<c:url value='/login' />" method='POST'>

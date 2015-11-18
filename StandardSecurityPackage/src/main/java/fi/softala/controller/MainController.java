@@ -73,11 +73,22 @@ public class MainController {
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String saveUser(Model model, @ModelAttribute(value="user") User user){
-
-		user.setRole("ROLE_USER");
-		getDao().saveUser(user);
-		model.addAttribute("success", " Rekisteröinti tehty tiedoilla: " + user.toString());
-		return "success";
+		//tarkistetaan ettei kyseiselle käyttäjänimelle ole jo luotu tiliä
+		boolean duplicateUsername = getDao().searchUser(user.getUsername());
+		if(!duplicateUsername){
+			user.setRole("ROLE_USER");
+			getDao().saveUser(user);
+			model.addAttribute("success", " Rekisteröinti tehty tiedoilla: " + user.toString());
+			return "success";
+			}
+		else {
+			//jos nimi on jo käytössä, tyhjätään kentät ja palataan rekisteröitymislomakkeeseen
+			model.addAttribute("error", "Antamallasi sähköpostiosoitteella on jo rekisteröidytty palveluun.");
+			user.setUsername("");
+			user.setEmptyPassword("");
+			model.addAttribute("user", user);
+			return "registration";
+		}
 	}
 
 	@RequestMapping(value = "/403", method = RequestMethod.GET)

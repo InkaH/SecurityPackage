@@ -9,11 +9,14 @@ import javax.validation.constraints.Size;
 
 public class User {
 	
-	@NotEmpty @Email
+	@NotEmpty 
     private String username;
 	
 	@NotEmpty @Size(min=3, max=60)
     private String password;
+	
+	@NotEmpty @Size(min=3, max=60)
+    private String confirmPassword;
 	
 	@NotEmpty
 	private String role;
@@ -25,7 +28,7 @@ public class User {
 	public User(String username, String password) {
 		super();
 		this.username = username;
-		this.password = password;
+		this.password = password;	
 	}
 
 	public String getUsername() {
@@ -46,6 +49,10 @@ public class User {
 		this.password = hashedPassword;
 	}
 	
+	public void setEmptyPassword(String password) {
+		this.password = password;
+	}
+		
 	public String getRole() {
 		return role;
 	}
