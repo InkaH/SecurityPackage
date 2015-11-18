@@ -3,10 +3,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
    <head>
-      <title>${title}</title>
+      <title>Tervetuloa</title>
    </head>
    <body>
-      <h2>${title}</h2>
+      <h2>Spring Security - autentikointi- ja autorisointidemo</h2>
       
       <!-- Näkymä anonyymille käyttäjälle -->
       <sec:authorize access="isAnonymous()">

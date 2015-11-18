@@ -2,7 +2,7 @@
 <%@page session="true"%>
 <html>
    <head>
-      <title>${title}</title>
+      <title>Sis‰‰nkirjautuminen</title>
    </head>
       <p>Anna k‰ytt‰j‰nimi ja salasana:</p>
       <p>Ilman tietokantaa: user1 12345 (k‰ytt‰j‰ll‰ on ROLE_USER) TAI admin1 12345 (k‰ytt‰j‰ll‰ on ROLE_USER ja ROLE_ADMIN)</p>
@@ -20,7 +20,7 @@
             action="<c:url value='/login' />" method='POST'>
             <table>
                <tr>
-                  <td>K‰ytt‰j‰nimi:</td>
+                  <td>Email:</td>
                   <td><input type='text' name='username'></td>
                </tr>
                <tr>

@@ -2,11 +2,11 @@
 <%@page session="true"%>
 <html>
    <head>
-      <title>${title}</title>
+      <title>ROLE_USER -sivu</title>
    </head>
    <body>
-      <h2>${title}</h2>
-      <h3>${message}</h3>
+      <h2>ROLE_USER -sivu</h2>
+      <h3>T‰lle sivulle p‰‰see vain ROLE_USER -roolilla.</h3>
       <c:if test="${pageContext.request.userPrincipal.name != null}">
          <h3>
             Tervetuloa, ${pageContext.request.userPrincipal.name}

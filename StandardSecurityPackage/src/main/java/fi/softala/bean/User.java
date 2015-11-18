@@ -1,5 +1,6 @@
 package fi.softala.bean;
 
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -7,6 +8,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.validation.constraints.Size;
 
 public class User {
+	
+	@NotEmpty @Email
+    private String username;
+	
+	@NotEmpty @Size(min=3, max=60)
+    private String password;
+	
+	@NotEmpty
+	private String role;
 
 	public User() {
 		super();
@@ -17,14 +27,6 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
-
-	@NotEmpty @Size(min=3, max=50)
-    private String username;
-	
-	@NotEmpty @Size(min=3, max=100)
-    private String password;
-	
-	private String role;
 
 	public String getUsername() {
 		return username;

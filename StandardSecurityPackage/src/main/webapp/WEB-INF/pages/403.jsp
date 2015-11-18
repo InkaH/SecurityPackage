@@ -2,10 +2,10 @@
 <%@page session="true"%>
 <html>
    <head>
-      <title>${title}</title>
+      <title>403 - Ei oikeuksia sivulle.</title>
    </head>
    <body>
-      <h2>${message}</h2>
+      <h2>403 - Ei oikeuksia sivulle.</h2>
       <c:url var="logoutUrl" value="/logout"/>
       <form action="${logoutUrl}"
          method="post">

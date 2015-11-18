@@ -6,15 +6,15 @@
 <%@ page session="false"%>
 <html>
 <head>
-	<title>${title}</title>
+	<title>Rekisteröityminen</title>
 </head>
 <body>
-	<h3>${message}</h3>
+	<h3>Rekisteröidy antamalla sähköpostiosoite ja salasana.</h3>
 	<form:form modelAttribute="user" action="registration" method="POST" enctype="utf8">
         <br>
         <table>
         <tr>
-        <td><label>Käyttäjänimi</label>
+        <td><label>Email:</label>
         </td>
         <td><form:input path="username" value="" /></td>
         <form:errors path="username"/>
@@ -22,7 +22,7 @@
     <tr>
         <td><label>Salasana:</label>
         </td>
-        <td><form:input path="password" value="" type="password" /></td>
+        <td><form:input path="password" value=""  type="password"/></td>
         <form:errors path="password"/>
     </tr>
     </table>
