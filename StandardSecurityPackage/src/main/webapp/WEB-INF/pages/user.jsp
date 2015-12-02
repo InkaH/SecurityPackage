@@ -14,12 +14,9 @@
             Tervetuloa, ${pageContext.request.userPrincipal.name}
          </h3>
       </c:if>
-      <c:url var="logoutUrl" value="/logout"/>
-      <form action="${logoutUrl}"
-         method="post">
-         <input type="submit"
-            value="Kirjaudu ulos" />
-         <sec:csrfInput />
+      <form action="logout" method="post">
+      	<input type="submit" value="Kirjaudu ulos" />
+        <sec:csrfInput />
       </form>
    </body>
 </html>

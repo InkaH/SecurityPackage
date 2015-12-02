@@ -13,10 +13,10 @@
       <sec:authorize access="isAnonymous()">
          <p>Tämä on näkymä anonyymille käyttäjälle.</p>
          <h3>
-            <a href="<c:url value="/login"/>">Kirjaudu sisään</a>
+            <a href="login">Kirjaudu sisään</a>
          </h3>
          <h3>
-            <a href="<c:url value="/registration"/>">Rekisteröidy</a>
+            <a href="registration">Rekisteröidy</a>
          </h3>
       </sec:authorize>
       
@@ -28,13 +28,10 @@
                Tervetuloa, ${pageContext.request.userPrincipal.name} 
             </h3>
          </c:if>
-         <c:url var="logoutUrl" value="/logout"/>
-         <form action="${logoutUrl}"
-            method="post">
-            <input type="submit"
-               value="Kirjaudu ulos" />
-            <sec:csrfInput />
-         </form>
+         <form action="logout" method="post">
+         	<input type="submit" value="Kirjaudu ulos" />
+         	<sec:csrfInput />
+     	 </form>
       </sec:authorize>
             
       <h3>

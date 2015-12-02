@@ -9,11 +9,8 @@
    </head>
    <body>
       <h2>403 - Ei oikeuksia sivulle.</h2>
-      <c:url var="logoutUrl" value="/logout"/>
-      <form action="${logoutUrl}"
-         method="post">
-         <input type="submit"
-            value="Kirjaudu ulos" />
+      <form action="logout" method="post">
+         <input type="submit" value="Kirjaudu ulos" />
          <sec:csrfInput />
       </form>
    </body>

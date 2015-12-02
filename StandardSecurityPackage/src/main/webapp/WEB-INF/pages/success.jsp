@@ -9,7 +9,7 @@
 <body>
  	${success}
  	<h3>
- 	 <a href="<c:url value="/login"/>">Kirjaudu sisään</a>
+ 	 <a href="login">Kirjaudu sisään</a>
  	</h3>
 </body>
 </html>

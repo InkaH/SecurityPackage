@@ -19,7 +19,7 @@
             <p style="color:red">${msg}</p>
          </c:if>
          <form name='loginForm'
-            action="<c:url value='/login' />" method='POST'>
+            action="login" method='POST'>
             <table>
                <tr>
                   <td>Email:</td>
