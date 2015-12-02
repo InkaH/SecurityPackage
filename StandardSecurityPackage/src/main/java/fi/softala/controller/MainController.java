@@ -1,5 +1,7 @@
 package fi.softala.controller;
 
+import java.security.Principal;
+
 import javax.inject.Inject;
 import javax.validation.Valid;
 
@@ -27,7 +29,7 @@ import fi.softala.dao.UserDao;
 
 @Controller
 public class MainController {
-	
+
 	@Inject
 	private UserDao dao;
 
@@ -45,13 +47,23 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
-	public String userPage(Model model) {
+	public String userPage(Model model, Principal principal) {
+		// haetaan sisäänkirjautuneen käyttäjänimi esimerkin vuoksi
+		String name = principal.getName();
+		System.out.println("Nimi on: " + name);
+		// haetaan sisäänkirjautuneen käyttäjän tietoja esimerkin vuoksi
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+			UserDetails userDetail = (UserDetails) auth.getPrincipal();
+			System.out.println("Sisäänkirjautumistiedot: " + userDetail);
+		}
 		return "user";
 	}
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminPage(Model model) {
-			return "admin";
+		return "admin";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -60,11 +72,13 @@ public class MainController {
 			@RequestParam(value = "logout", required = false) String logout) {
 
 		if (error != null) {
-			model.addAttribute("error", "Virheellinen käyttäjänimi tai salasana.");
+			model.addAttribute("error",
+					"Virheellinen käyttäjänimi tai salasana.");
 		}
 		if (logout != null) {
 			model.addAttribute("msg", "Olet kirjautunut ulos.");
 		}
+		model.addAttribute("user", new User("", "")); 
 		return "login";
 	}
 
@@ -76,22 +90,25 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String saveUser(Model model, @Valid User user, BindingResult bindingResult){
-		 if (bindingResult.hasErrors()) {
-			 user.setEmptyPassword("");
-	         return "registration";
-	        }
-		//tarkistetaan ettei kyseiselle käyttäjänimelle ole jo luotu tiliä
+	public String saveUser(Model model, @Valid User user,
+			BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			user.setEmptyPassword("");
+			return "registration";
+		}
+		// tarkistetaan ettei kyseiselle käyttäjänimelle ole jo luotu tiliä
 		boolean duplicateUsername = getDao().searchUser(user.getUsername());
-		if(!duplicateUsername){
+		if (!duplicateUsername) {
 			user.setRole("ROLE_USER");
 			getDao().saveUser(user);
-			model.addAttribute("success", " Rekisteröinti tehty tiedoilla: " + user.toString());
+			model.addAttribute("success", " Rekisteröinti tehty tiedoilla: "
+					+ user.toString());
 			return "success";
-			}
-		else {
-			//jos nimi on jo käytössä, tyhjätään kentät ja palataan rekisteröitymislomakkeeseen
-			model.addAttribute("error", "Antamallasi sähköpostiosoitteella on jo rekisteröidytty palveluun.");
+		} else {
+			// jos nimi on jo käytössä, tyhjätään kentät ja palataan
+			// rekisteröitymislomakkeeseen
+			model.addAttribute("error",
+					"Antamallasi sähköpostiosoitteella on jo rekisteröidytty palveluun.");
 			user.setUsername("");
 			user.setEmptyPassword("");
 			model.addAttribute("user", user);
@@ -101,13 +118,6 @@ public class MainController {
 
 	@RequestMapping(value = "/403", method = RequestMethod.GET)
 	public String accessDenied(Model model) {
-		// printataan konsolille sisäänkirjautuneen käyttäjän tietoja
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
-		if (!(auth instanceof AnonymousAuthenticationToken)) {
-			UserDetails userDetail = (UserDetails) auth.getPrincipal();
-			System.out.println(userDetail);
-		}
 		return "403";
 	}
 }

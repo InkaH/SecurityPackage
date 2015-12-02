@@ -45,6 +45,8 @@ public class User {
 		this.password = hashedPassword;
 	}
 	
+	//tarvitaan metodia, jolla pystytään asettamaan tyhjä salasana
+	//formiin, mikäli formissa ilmeni jokin virhe sen lähettämisen jälkeen
 	public void setEmptyPassword(String password) {
 		this.password = password;
 	}

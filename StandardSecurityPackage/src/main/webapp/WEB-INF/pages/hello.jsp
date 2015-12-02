@@ -1,6 +1,7 @@
-<%@taglib prefix="sec"
-   uri="http://www.springframework.org/security/tags"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <html>
    <head>
       <title>Tervetuloa</title>
@@ -8,20 +9,20 @@
    <body>
       <h2>Spring Security - autentikointi- ja autorisointidemo</h2>
       
-      <!-- N‰kym‰ anonyymille k‰ytt‰j‰lle -->
+      <!-- N√§kym√§ anonyymille k√§ytt√§j√§lle -->
       <sec:authorize access="isAnonymous()">
-         <p>T‰m‰ on n‰kym‰ anonyymille k‰ytt‰j‰lle.</p>
+         <p>T√§m√§ on n√§kym√§ anonyymille k√§ytt√§j√§lle.</p>
          <h3>
-            <a href="<c:url value="/login"/>">Kirjaudu sis‰‰n</a>
+            <a href="<c:url value="/login"/>">Kirjaudu sis√§√§n</a>
          </h3>
          <h3>
-            <a href="<c:url value="/registration"/>">Rekisterˆidy</a>
+            <a href="<c:url value="/registration"/>">Rekister√∂idy</a>
          </h3>
       </sec:authorize>
       
-      <!-- N‰kym‰ sis‰‰nkirjautuneelle k‰ytt‰j‰lle, jolla on ROLE_USER-->
+      <!-- N√§kym√§ sis√§√§nkirjautuneelle k√§ytt√§j√§lle, jolla on ROLE_USER-->
       <sec:authorize access="hasRole('ROLE_USER')">
-         <p>T‰m‰ on n‰kym‰ sis‰‰nkirjautuneelle k‰ytt‰j‰lle, jolla on ROLE_USER.</p>
+         <p>T√§m√§ on n√§kym√§ sis√§√§nkirjautuneelle k√§ytt√§j√§lle, jolla on ROLE_USER.</p>
          <c:if test="${pageContext.request.userPrincipal.name != null}">
             <h3>
                Tervetuloa, ${pageContext.request.userPrincipal.name} 
@@ -32,22 +33,20 @@
             method="post">
             <input type="submit"
                value="Kirjaudu ulos" />
-            <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
+            <sec:csrfInput />
          </form>
       </sec:authorize>
             
       <h3>
          <a href="<c:url value="/user"/>">Kokeile ROLE_USER -rajattua sivua</a>
       </h3>
-      <p>-> Kun anonyymi k‰ytt‰j‰ yritt‰‰ p‰‰st‰ user-sivulle, h‰net ohjataan login-sivulle.</p>
+      <p>-> Kun anonyymi k√§ytt√§j√§ yritt√§√§ p√§√§st√§ user-sivulle, h√§net ohjataan login-sivulle.</p>
       
       <h3>
          <a href="<c:url value="/admin"/>">Kokeile ROLE_ADMIN -rajattua sivua</a>
       </h3>
-      <p>-> Kun anonyymi k‰ytt‰j‰ yritt‰‰ p‰‰st‰ admin-sivulle, h‰net ohjataan login-sivulle.</p>
-      <p>-> 403-sivu n‰ytet‰‰n, mik‰li kirjautuneella ei ole admin-oikeuksia.</p>
+      <p>-> Kun anonyymi k√§ytt√§j√§ yritt√§√§ p√§√§st√§ admin-sivulle, h√§net ohjataan login-sivulle.</p>
+      <p>-> 403-sivu n√§ytet√§√§n, mik√§li kirjautuneella ei ole admin-oikeuksia.</p>
      
    </body>
 </html>

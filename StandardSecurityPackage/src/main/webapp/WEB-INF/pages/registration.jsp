@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page session="false"%>
 <html>
 <head>
@@ -23,13 +22,13 @@
         <td><label>Email:</label>
         </td>
         <td><form:input path="username" value="" /></td>
-        <form:errors path="username"/>
+        <form:errors path="username" style="color:red"/>
     </tr>
     <tr>
         <td><label>Salasana:</label>
         </td>
         <td><form:input path="password" id="password" value="" type="password"/><span id='pwMsg'></span></td>
-        <form:errors path="password"/>
+        <form:errors path="password" style="color:red"/>
     </tr>
     <tr>
         <td><label>Toista salasana:</label>
