@@ -48,7 +48,6 @@
     		document.getElementById('submit').disabled = true;
     	} else {
     		$('#pwMsg').html('Salasanan pituus 3-60 merkkiä').css('color', 'green');
-    		document.getElementById('submit').disabled = false;
     	}
     });
     
