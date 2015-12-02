@@ -48,10 +48,10 @@ public class MainController {
 
 	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public String userPage(Model model, Principal principal) {
-		// haetaan sisäänkirjautuneen käyttäjänimi esimerkin vuoksi
+		// printataan konsolille sisäänkirjautuneen käyttäjänimi esimerkin vuoksi
 		String name = principal.getName();
 		System.out.println("Nimi on: " + name);
-		// haetaan sisäänkirjautuneen käyttäjän tietoja esimerkin vuoksi
+		// printataan konsolille sisäänkirjautuneen käyttäjän tietoja esimerkin vuoksi
 		Authentication auth = SecurityContextHolder.getContext()
 				.getAuthentication();
 		if (!(auth instanceof AnonymousAuthenticationToken)) {
@@ -78,7 +78,7 @@ public class MainController {
 		if (logout != null) {
 			model.addAttribute("msg", "Olet kirjautunut ulos.");
 		}
-		model.addAttribute("user", new User("", "")); 
+		model.addAttribute("user", new User("", ""));
 		return "login";
 	}
 
@@ -101,9 +101,12 @@ public class MainController {
 		if (!duplicateUsername) {
 			user.setRole("ROLE_USER");
 			getDao().saveUser(user);
+			// jos rekisteröinti onnistuu, palataan loginiin ja printataan
+			// esimerkin vuoksi rekisteröitymistiedot,
+			// joista käy ilmi että salasana on nyt suojattu encoderilla
 			model.addAttribute("success", " Rekisteröinti tehty tiedoilla: "
 					+ user.toString());
-			return "success";
+			return "login";
 		} else {
 			// jos nimi on jo käytössä, tyhjätään kentät ja palataan
 			// rekisteröitymislomakkeeseen

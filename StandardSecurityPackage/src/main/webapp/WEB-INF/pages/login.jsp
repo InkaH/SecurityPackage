@@ -18,6 +18,9 @@
          <c:if test="${not empty msg}">
             <p style="color:red">${msg}</p>
          </c:if>
+          <c:if test="${not empty success}">
+            <p style="color:green">${success}</p>
+         </c:if>
          <form name='loginForm'
             action="login" method='POST'>
             <table>
