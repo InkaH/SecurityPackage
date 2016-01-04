@@ -11,20 +11,29 @@
        http://www.springframework.org/schema/mvc 
        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
  
-   <context:component-scan base-package="fi.softala.*" />
-   <context:annotation-config />
- 
+    <context:component-scan base-package="fi.softala.*" />
+    <context:annotation-config />
+	 
  	<!-- @Controller annotations support -->
 	<mvc:annotation-driven />
  
-   <bean
-     class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-     <property name="prefix">
-       <value>/WEB-INF/pages/</value>
-     </property>
-     <property name="suffix">
-       <value>.jsp</value>
-     </property>
-   </bean>
+    <bean
+    	class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+     	<property name="prefix">
+       		<value>/WEB-INF/pages/</value>
+     	</property>
+     	<property name="suffix">
+       		<value>.jsp</value>
+     	</property>
+   	</bean>
+   
+   	<!-- Exception resolver for Data Access Exceptions -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    	<property name="exceptionMappings">
+        	<props>
+            	<prop key="org.springframework.dao.DataAccessException">error</prop>
+        	</props>
+    	</property>
+	</bean>
  
 </beans>

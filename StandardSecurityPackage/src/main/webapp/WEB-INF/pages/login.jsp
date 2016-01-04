@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ page session="false"%>
 <html>
    <head>
       <title>Sisäänkirjautuminen</title>
@@ -12,15 +13,15 @@
    <body onload='document.loginForm.username.focus();'>
       <div>
          <h3>Anna sähköpostiosoite ja salasana:</h3>
-         <c:if test="${not empty error}">
-            <p style="color:red">${error}</p>
-         </c:if>
-         <c:if test="${not empty msg}">
-            <p style="color:red">${msg}</p>
-         </c:if>
-          <c:if test="${not empty success}">
-            <p style="color:green">${success}</p>
-         </c:if>
+         <c:if test="${not empty logout}">
+			<p style="color: green">${logout}</p>
+		 </c:if>
+		 <c:if test="${not empty error}">
+			<p style="color: red">${error}</p>
+		 </c:if>
+		 <c:if test="${not empty success}">
+			<p style="color: green">${success}</p>
+		 </c:if>
          <form name='loginForm'
             action="login" method='POST'>
             <table>

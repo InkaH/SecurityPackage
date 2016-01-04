@@ -3,16 +3,21 @@ package fi.softala.controller;
 import java.security.Principal;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +35,8 @@ import fi.softala.dao.UserDao;
 @Controller
 public class MainController {
 
+	final static Logger logger = LoggerFactory.getLogger(MainController.class);
+	
 	@Inject
 	private UserDao dao;
 
@@ -69,14 +76,18 @@ public class MainController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model,
 			@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout) {
+			@RequestParam(value = "logout", required = false) String logout,
+			HttpServletRequest request) {
+		logger.info("kirj.sisään");
 
 		if (error != null) {
+			logger.info("error ei ollut null");
 			model.addAttribute("error",
-					"Virheellinen käyttäjänimi tai salasana.");
+					getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
 		}
 		if (logout != null) {
-			model.addAttribute("msg", "Olet kirjautunut ulos.");
+			logger.info("logout ei ollut null");
+			model.addAttribute("logout", "Olet kirjautunut ulos.");
 		}
 		model.addAttribute("user", new User("", ""));
 		return "login";
@@ -117,6 +128,29 @@ public class MainController {
 			model.addAttribute("user", user);
 			return "registration";
 		}
+	}
+	
+	/*
+	 * Metodi, joka palauttaa virheilmoitusten tekstin kustomoituna suomeksi käyttäjän 
+	 * näkymään sekä tulostaa poikkeuksen sisällön html-kommenttina.  
+	 */
+	private String getErrorMessage(HttpServletRequest request, String key) {
+
+		Exception exception = (Exception) request.getSession()
+				.getAttribute(key);
+
+		String error = "";
+		if (exception instanceof BadCredentialsException) {
+			error = "Virheellinen käyttäjätunnus ja/tai salasana" + "<!--VIRHEILMOITUS: " + exception.toString() + "-->";
+		} else if (exception instanceof LockedException) {
+			error = "Käyttäjätunnus lukittu liian monen kirjautumisyrityksen vuoksi" + "<!--VIRHEILMOITUS: " + exception.toString() + "-->";
+		} else if (exception instanceof InternalAuthenticationServiceException) {
+			error = "Yhteysvirhe - yritä hetken kuluttua uudelleen" + "<!--VIRHEILMOITUS: " + exception.toString() + "-->";
+		} else {
+			error = "Yhteysvirhe - yritä hetken kuluttua uudelleen" + "<!--VIRHEILMOITUS: " + exception.toString() + "-->";
+		}
+
+		return error;
 	}
 
 	@RequestMapping(value = "/403", method = RequestMethod.GET)

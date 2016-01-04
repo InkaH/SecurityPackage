@@ -15,7 +15,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
       <!-- 403-sivun määrittely -->
       <access-denied-handler error-page="/403" />
       <!-- Spring loginin oletusmäärityksistä: http://docs.spring.io/spring-security/site/docs/4.0.2.RELEASE/reference/html/appendix-namespace.html#nsa-form-login-attributes -->
-      <form-login login-page="/login" default-target-url="/welcome" />
+      <form-login login-page="/login" default-target-url="/welcome" authentication-failure-url="/login?error" />
       <!-- Spring logoutin oletusmäärityksistä: http://docs.spring.io/spring-security/site/docs/4.0.2.RELEASE/reference/html/appendix-namespace.html#nsa-logout -->
       <logout delete-cookies="JSESSIONID"/>
       <!-- Estetään yhden käyttäjän usea samanaikainen sisäänkirjautuminen. Toinen sisäänkirjautuminen invalidoi tällä ensimmäisen. -->
